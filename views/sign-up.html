@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="form-holder">
+            <h2>Create New Account</h2>
+            <form action="/users/reg" method="POST" class="form" onsubmit="handleSignUp(event)">
+                <div class="form-group">
+                    <img src="/img/user.png" alt="">
+                    <input type="text" id="username" name="username" placeholder="User name" required> 
+                </div>
+                <div class="form-group">
+                    <img src="/img/email.png" alt="">
+                    <input type="text" id="email" name="email" placeholder="Email" required> 
+                </div>
+                <div class="form-group">
+                    <img src="/img/lock.png" alt="">
+                    <input type="password" id="password" name="password" placeholder="Password" required> 
+                </div>
+                <div class="form-group">
+                    <button type="submit">Sign Up</button> 
+                </div>
+                <div class="form-group">
+                    <a href="/index" class="right-link">Sign in</a>
+                </div>
+            </form>                     
+        </div>
+    </div>
+    <script>
+        async function handleSignUp(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const response = await fetch("/users/reg", {  
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, email, password }),
+            });
+
+            const data = await response.json();
+
+            if (response.status === 201) {
+                alert(data.message); 
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 2000);
+            } else {
+                alert("Error: " + data.message);
+            }
+        }
+    </script>
+</body>
+</html>
 
