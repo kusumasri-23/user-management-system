@@ -1,1 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+ 
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Welcome to Your Dashboard!</h1>
+        <p>This is a protected area. Here you can manage your account and settings.</p>
+        <a href="/">Logout</a> <!-- Logout link (just for demonstration) -->
+    </div>
+    <script>
+        async function fetchUsers() {
+            const response = await fetch("/users");
+            const users = await response.json();
+            const userList = document.getElementById("user-list");
 
+            if (response.ok) {
+                users.forEach(user => {
+                    const userItem = document.createElement("div");
+                    userItem.textContent = Username: ${user.username}, Full Name: ${user.fullname}, Email: ${user.email};
+                    userList.appendChild(userItem);
+                });
+            } else {
+                userList.textContent = "Error fetching users.";
+            }
+        }
+        window.onload = fetchUsers;
+    </script>
+</body>
+</html>
